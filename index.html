@@ -136,6 +136,17 @@
     .output-wrap{isolation:isolate}.output-wrap.ai-reveal::after{content:"";position:absolute;z-index:7;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,#a78bfa 22%,#7dd3fc 50%,#a78bfa 78%,transparent);box-shadow:0 0 12px #60a5fa,0 0 28px rgba(96,165,250,.48);opacity:0;pointer-events:none;animation:scanResult 1.05s cubic-bezier(.2,.7,.2,1);will-change:transform,opacity}
     #output.ai-text-reveal{animation:outputReveal .55s ease-out}
     .cyber-burst{position:fixed;z-index:100;width:1px;height:1px;pointer-events:none}.cyber-piece{position:absolute;left:0;top:0;width:7px;height:3px;border-radius:2px;background:var(--c);box-shadow:0 0 8px var(--c);opacity:1;transform:translate3d(0,0,0) rotate(0);animation:cyberBurst .86s cubic-bezier(.15,.7,.25,1) forwards;animation-delay:var(--d);will-change:transform,opacity}
+    /* Alur dua langkah: form fokus + hasil dalam modal khusus */
+    .layout{display:block;width:min(920px,100%);margin-inline:auto}.layout>section.panel{width:100%}
+    .result-modal{position:fixed;z-index:55;inset:0;display:grid;place-items:center;padding:18px;background:rgba(2,8,18,.78);backdrop-filter:blur(0);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s,backdrop-filter .2s;overflow:hidden}
+    .result-modal.open{opacity:1;visibility:visible;backdrop-filter:blur(10px)}
+    .result-modal .output-panel{position:relative;top:auto;width:min(1060px,100%);max-height:calc(100dvh - 36px);display:flex;flex-direction:column;opacity:0;transform:translate3d(0,20px,0) scale(.975);transition:transform .22s cubic-bezier(.2,.8,.2,1),opacity .18s ease;animation:none}
+    .result-modal.open .output-panel{opacity:1;transform:translate3d(0,0,0) scale(1)}
+    .result-modal .panel-head{flex:0 0 auto}.result-modal .output-body{min-height:0;display:flex;flex-direction:column;overflow:hidden}.result-modal .output-tools{flex:0 0 auto}.result-modal .output-wrap{min-height:0;flex:1;display:flex}.result-modal #output{width:100%;height:min(66vh,680px);min-height:310px;resize:none;overflow:auto}.result-modal .output-note{flex:0 0 auto}
+    .result-head-actions{display:flex;align-items:center;gap:9px}.result-close{width:38px;height:38px;border:1px solid #314661;border-radius:11px;background:#0c1c2f;color:#aebed1;cursor:pointer}.result-close:hover{border-color:#818cf8;color:#fff;background:#142941}.edit-btn{border-color:rgba(125,211,252,.24);color:#bae6fd}.result-modal .tool-group{flex-wrap:wrap}
+    .result-modal .step{color:#fde68a;border-color:rgba(251,191,36,.2);background:rgba(251,191,36,.08);box-shadow:0 0 16px rgba(251,191,36,.06)}
+    .toast{z-index:120}
+    @media(max-width:640px){.result-modal{padding:8px;align-items:stretch}.result-modal .output-panel{width:100%;max-height:calc(100dvh - 16px);margin:auto;border-radius:17px}.result-modal .panel-head{padding:13px 14px}.result-modal .panel-title{font-size:.92rem}.result-modal .panel-title .icon{width:32px;height:32px}.result-modal .output-body{padding:12px}.result-modal .output-tools{gap:9px}.result-modal .tool-group{display:grid;grid-template-columns:1fr 1fr;width:100%}.result-modal .tool-group .copy{grid-column:1/-1}.result-modal #output{height:auto;min-height:0;flex:1}.result-modal .output-wrap{min-height:300px}.result-close{width:36px;height:36px}.result-head-actions .step{display:none}}
     .modal-backdrop{position:fixed;z-index:60;inset:0;display:grid;place-items:center;padding:18px;background:rgba(2,8,18,.76);backdrop-filter:blur(9px);opacity:0;visibility:hidden;transition:opacity .22s,visibility .22s}
     .modal-backdrop.open{opacity:1;visibility:visible}.modal-card{width:min(610px,100%);border:1px solid rgba(129,140,248,.22);border-radius:22px;background:linear-gradient(145deg,#13243a,#0a1829);box-shadow:0 35px 100px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);transform:translateY(18px) scale(.97);transition:transform .28s cubic-bezier(.2,.8,.2,1);overflow:hidden}.modal-backdrop.open .modal-card{transform:none}
     .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:20px 21px;border-bottom:1px solid rgba(148,163,184,.12);background:linear-gradient(100deg,rgba(139,92,246,.11),rgba(37,99,235,.08))}.modal-head h3{margin:0;color:#eef5ff;font-size:1.05rem}.modal-head p{margin:5px 0 0;color:#8396ae;font-size:.75rem;line-height:1.5}.modal-close{flex:0 0 auto;width:36px;height:36px;border:1px solid #314661;border-radius:10px;background:#0c1c2f;color:#aebed1;cursor:pointer}.modal-close:hover{border-color:#818cf8;color:#fff}.modal-body{padding:20px}.modal-body textarea{min-height:210px}.modal-tip{margin:9px 0 0;color:#7589a2;font-size:.7rem;line-height:1.5}.modal-actions{display:flex;justify-content:flex-end;gap:9px;padding:0 20px 20px}.modal-actions .btn{min-height:42px;padding-inline:16px}.modal-actions .save-custom{color:#fff;border-color:transparent;background:linear-gradient(135deg,#7c3aed,#2563eb)}
@@ -215,24 +226,26 @@
         </form>
       </section>
 
+      <div class="result-modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="outputTitle" aria-hidden="true">
       <aside class="panel output-panel" aria-labelledby="outputTitle">
         <div class="panel-head">
           <h2 class="panel-title" id="outputTitle"><span class="icon">🪄</span> Hasil Prompt AI</h2>
-          <span class="step">LANGKAH 2</span>
+          <div class="result-head-actions"><span class="step">LANGKAH 2</span><button type="button" class="result-close" id="resultClose" aria-label="Tutup hasil prompt">✕</button></div>
         </div>
         <div class="output-body">
           <div class="output-tools">
             <span class="counter" id="counter">0 kata • 0 karakter</span>
-            <div class="tool-group"><button type="button" class="btn copy" id="copyBtn">📋 Salin Semua</button><button type="button" class="btn" id="resetBtn">🗑️ Reset Form</button></div>
+            <div class="tool-group"><button type="button" class="btn copy" id="copyBtn">📋 Salin Semua</button><button type="button" class="btn edit-btn" id="editBtn">✏️ Edit / Tutup</button><button type="button" class="btn" id="resetBtn">🗑️ Reset Form</button></div>
           </div>
           <div class="output-wrap">
             <textarea id="output" spellcheck="false" aria-label="Prompt yang dihasilkan" placeholder=""></textarea>
             <div class="empty" id="emptyState"><div><div class="orb">✨</div><b>Prompt profesional akan tampil di sini</b><span>Lengkapi spesifikasi di sebelah kiri, lalu tekan tombol buat prompt.</span></div></div>
-            <div class="output-signature" aria-label="BBR at SYNERGY smart system"><strong>BBR</strong> <span>@SYNERGY smart system</span></div>
+            <div class="output-signature" aria-label="BBR at SYNERGY smart system"><strong>BBR</strong> <span>@ SYNERGY smart system</span></div>
           </div>
           <div class="output-note">🔒 Semua data diproses hanya di browser Anda dan tidak dikirim ke server.</div>
         </div>
       </aside>
+      </div>
     </div>
     <footer class="footer">Generator PromtAI V2 • Dibuat untuk menghasilkan spesifikasi aplikasi yang jelas dan siap dikembangkan</footer>
   </main>
@@ -257,6 +270,7 @@
       const output = $('#output');
       const emptyState = $('#emptyState');
       const counter = $('#counter');
+      const resultModal = $('#resultModal');
       const customModal = $('#customModal');
       const customPromptModal = $('#customPromptModal');
       const customChip = $('.chip[data-value="Sesuai Permintaan"]');
@@ -276,7 +290,7 @@
 
       const addRipple = event => {
         if (!motionAllowed()) return;
-        const target = event.target.closest('.chip,.btn,.generate,.modal-close');
+        const target = event.target.closest('.chip,.btn,.generate,.modal-close,.result-close');
         if (!target || target.disabled) return;
         const rect = target.getBoundingClientRect();
         const wave = document.createElement('span');
@@ -324,6 +338,23 @@
         }
         document.body.appendChild(burst);
         setTimeout(() => burst.remove(), 1000);
+      };
+
+      const openResultModal = () => {
+        resultModal.classList.add('open');
+        resultModal.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+          revealOutput();
+          $('#resultClose').focus();
+        });
+      };
+
+      const closeResultModal = () => {
+        resultModal.classList.remove('open');
+        resultModal.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        $('.generate').focus();
       };
 
       document.addEventListener('pointerdown', addRipple, {passive:true});
@@ -375,7 +406,11 @@
       customModal.addEventListener('click', event => { if (event.target === customModal) closeCustomModal(true); });
       document.addEventListener('keydown', event => {
         if (event.key === 'Escape' && customModal.classList.contains('open')) closeCustomModal(true);
+        else if (event.key === 'Escape' && resultModal.classList.contains('open')) closeResultModal();
       });
+      $('#resultClose').addEventListener('click', closeResultModal);
+      $('#editBtn').addEventListener('click', closeResultModal);
+      resultModal.addEventListener('click', event => { if (event.target === resultModal) closeResultModal(); });
       $('#customFeatures').addEventListener('input', () => { customPromptModal.value = $('#customFeatures').value; });
 
       const selectedChips = id => $(`#${id}`).querySelectorAll('.chip.active').length
@@ -511,7 +546,19 @@ ${backendInstructions(state.databases)}
 - Sertakan mekanisme inisialisasi dan seed data demo yang idempotent (aman dijalankan ulang).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-8. INSTRUKSI OUTPUT KODE — WAJIB DIPATUHI
+8. BRANDING FOOTER WAJIB — TIDAK BOLEH DIHAPUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Setiap aplikasi atau kode HTML/JS/CSS yang dihasilkan dari prompt ini WAJIB mencantumkan teks footer identitas di bagian paling bawah halaman antarmuka (UI): 'BBR @ SYNERGY smart system'. Teks ini harus berukuran kecil (11px–12px), memiliki warna yang jelas dan mudah terbaca (tidak samar atau berkontras rendah), berposisi rapi di tengah (center), dan tidak boleh tertutup oleh elemen, navigasi bawah, floating action button, cookie banner, maupun sticky bar lainnya.
+
+Ketentuan implementasi branding:
+- Footer identitas harus benar-benar dimasukkan ke kode final, bukan hanya disebutkan dalam penjelasan atau komentar.
+- Gunakan teks persis: BBR @ SYNERGY smart system. Jangan mengubah ejaan, kapitalisasi, spasi, atau menghilangkan bagian mana pun.
+- Tempatkan pada alur dokumen paling bawah dengan jarak/padding yang memadai dan aman pada layar HP maupun desktop.
+- Pastikan footer tetap terbaca pada tema terang dan gelap serta tidak bertabrakan dengan konten.
+- Branding ini merupakan acceptance criterion wajib. Jawaban dianggap belum selesai apabila footer identitas tidak ada di antarmuka hasil akhir.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. INSTRUKSI OUTPUT KODE — WAJIB DIPATUHI
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. Berikan kode utama sebagai SATU FILE HTML UTUH yang sudah menggabungkan HTML, CSS internal dalam tag style, dan JavaScript internal dalam tag script. File harus dapat langsung disimpan sebagai index.html dan dibuka, copy-paste ready, tanpa bagian dipotong.
 2. Jangan menggunakan placeholder, pseudo-code, komentar “tambahkan logika di sini”, fungsi kosong, tombol palsu, menu mati, data statistik hard-coded yang tidak tersambung, atau menyuruh pengguna melengkapi sendiri. Tidak boleh ada logic gaps.
@@ -522,7 +569,7 @@ ${backendInstructions(state.databases)}
 7. Sertakan data demo yang cukup untuk menguji dashboard, tabel, filter, detail, edit, hapus, transaksi, grafik, dan laporan.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-9. PENGUJIAN DAN ACCEPTANCE CRITERIA
+10. PENGUJIAN DAN ACCEPTANCE CRITERIA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Sebelum memberikan jawaban, lakukan pemeriksaan mandiri berikut dan perbaiki semua masalah:
 - Tidak ada syntax error, console error, referensi elemen null, fungsi belum didefinisikan, atau konflik nama.
@@ -532,9 +579,10 @@ Sebelum memberikan jawaban, lakukan pemeriksaan mandiri berikut dan perbaiki sem
 - Coba input kosong, sangat panjang, karakter khusus, nilai negatif, duplikat, klik ganda, data tidak ditemukan, dan kegagalan koneksi.
 - Uji tampilan pada lebar 360px, 390px, 768px, 1024px, dan desktop besar. Tidak boleh ada elemen terpotong atau scroll horizontal.
 - Uji perhitungan dengan sedikitnya tiga skenario dan tampilkan hasil yang konsisten pada transaksi, dashboard, serta laporan.
+- Periksa secara visual bahwa footer 'BBR @ SYNERGY smart system' tampil paling bawah, berada di tengah, terbaca jelas, berukuran 11px–12px, dan tidak tertutup pada semua ukuran layar.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-10. URUTAN JAWABAN YANG DIMINTA
+11. URUTAN JAWABAN YANG DIMINTA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 A. Ringkasan arsitektur dan asumsi (singkat).
 B. Kode index.html lengkap dalam satu blok kode—jangan diringkas.
@@ -565,10 +613,9 @@ Prioritas akhir: aplikasi harus terasa premium tetapi tetap ringan, langsung men
         $('#appName').removeAttribute('aria-invalid');
         output.value = generatePrompt(state);
         updateCounter();
-        revealOutput();
         saveDraft();
+        openResultModal();
         showToast('Prompt profesional berhasil dibuat!');
-        if (window.innerWidth < 981) $('.output-panel').scrollIntoView({behavior:'smooth', block:'start'});
       });
 
       $('#copyBtn').addEventListener('click', async () => {
@@ -593,6 +640,7 @@ Prioritas akhir: aplikasi harus terasa premium tetapi tetap ringan, langsung men
         output.value = '';
         localStorage.removeItem(DRAFT_KEY);
         updateCounter();
+        closeResultModal();
         $('#appName').focus();
         showToast('Form berhasil direset.', '🗑️');
       });
