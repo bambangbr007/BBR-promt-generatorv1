@@ -93,9 +93,6 @@
     body{color:var(--ink);background:radial-gradient(circle at 18% 10%,rgba(76,57,146,.2),transparent 26%),radial-gradient(circle at 85% 30%,rgba(37,99,235,.16),transparent 29%),linear-gradient(145deg,#040b15 0%,#071421 48%,#0a1627 100%)}
     body::before{width:520px;height:520px;left:-220px;top:-200px;background:radial-gradient(circle,rgba(139,92,246,.18),transparent 67%);animation:orbFloat 13s ease-in-out infinite alternate}
     body::after{width:600px;height:600px;right:-250px;bottom:-260px;background:radial-gradient(circle,rgba(56,189,248,.15),transparent 68%);animation:orbFloat 16s ease-in-out infinite alternate-reverse}
-    .cyber-grid{position:fixed;z-index:-2;inset:0;overflow:hidden;pointer-events:none;background-image:linear-gradient(rgba(96,165,250,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.025) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(to bottom,black,transparent 92%)}
-    .cyber-grid::before{content:"";position:absolute;inset:-80% 0 0;background:linear-gradient(to bottom,transparent 48%,rgba(96,165,250,.09) 50%,transparent 52%);animation:scanLine 9s linear infinite}
-    .particle{position:absolute;width:3px;height:3px;border-radius:50%;background:#93c5fd;box-shadow:0 0 12px #60a5fa;opacity:.45;animation:particleRise var(--speed) linear infinite;animation-delay:var(--delay)}
     .hero{animation:heroEnter .75s cubic-bezier(.2,.8,.2,1) both}
     .brand{background:linear-gradient(90deg,#f8fbff 5%,#c4b5fd 44%,#7dd3fc 75%,#f8fbff 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 28px rgba(96,165,250,.2);animation:titleFlow 5s linear infinite}
     .brand-mark{color:#fff;border-color:rgba(167,139,250,.32);background:linear-gradient(145deg,rgba(167,139,250,.18),rgba(96,165,250,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 0 26px rgba(96,165,250,.16);animation:markPulse 3.2s ease-in-out infinite}
@@ -156,17 +153,22 @@
     @media(max-width:760px){.design-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.design-grid .radio{min-height:116px}}
     @media(max-width:640px){.feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-grid .check{min-height:84px;padding:12px 34px 12px 10px}.feature-grid .check>span{flex-direction:column;align-items:flex-start;gap:6px}.feature-grid .feature-icon{width:22px;height:22px}.feature-grid .check>span{font-size:.68rem}}
     @media(max-width:420px){.feature-grid{grid-template-columns:1fr}.feature-grid .check{min-height:68px}.feature-grid .check>span{flex-direction:row;align-items:center}.design-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    /* Quantum Holographic Neural Mesh — satu canvas adaptif di belakang seluruh UI */
+    body{background:#050814;overflow-x:hidden}.app{position:relative;z-index:3}.panel{background:linear-gradient(145deg,rgba(14,24,47,.91),rgba(7,13,33,.92));box-shadow:0 28px 80px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.055)}
+    #quantumCanvas{position:fixed;z-index:0;inset:0;width:100%;height:100%;pointer-events:none;display:block;opacity:1;contain:strict}.hero,.layout,.footer{position:relative;z-index:2}
+    @media(prefers-reduced-motion:reduce){#quantumCanvas{opacity:.72}}
     @media(max-width:640px){.result-modal{padding:8px;align-items:stretch}.result-modal .output-panel{width:100%;max-height:calc(100dvh - 16px);margin:auto;border-radius:17px}.result-modal .panel-head{padding:13px 14px}.result-modal .panel-title{font-size:.92rem}.result-modal .panel-title .icon{width:32px;height:32px}.result-modal .output-body{padding:12px}.result-modal .output-tools{gap:9px}.result-modal .tool-group{display:grid;grid-template-columns:1fr 1fr;width:100%}.result-modal .tool-group .copy{grid-column:1/-1}.result-modal #output{height:auto;min-height:0;flex:1}.result-modal .output-wrap{min-height:300px}.result-close{width:36px;height:36px}.result-head-actions .step{display:none}}
     .modal-backdrop{position:fixed;z-index:60;inset:0;display:grid;place-items:center;padding:18px;background:rgba(2,8,18,.76);backdrop-filter:blur(9px);opacity:0;visibility:hidden;transition:opacity .22s,visibility .22s}
     .modal-backdrop.open{opacity:1;visibility:visible}.modal-card{width:min(610px,100%);border:1px solid rgba(129,140,248,.22);border-radius:22px;background:linear-gradient(145deg,#13243a,#0a1829);box-shadow:0 35px 100px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);transform:translateY(18px) scale(.97);transition:transform .28s cubic-bezier(.2,.8,.2,1);overflow:hidden}.modal-backdrop.open .modal-card{transform:none}
     .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:20px 21px;border-bottom:1px solid rgba(148,163,184,.12);background:linear-gradient(100deg,rgba(139,92,246,.11),rgba(37,99,235,.08))}.modal-head h3{margin:0;color:#eef5ff;font-size:1.05rem}.modal-head p{margin:5px 0 0;color:#8396ae;font-size:.75rem;line-height:1.5}.modal-close{flex:0 0 auto;width:36px;height:36px;border:1px solid #314661;border-radius:10px;background:#0c1c2f;color:#aebed1;cursor:pointer}.modal-close:hover{border-color:#818cf8;color:#fff}.modal-body{padding:20px}.modal-body textarea{min-height:210px}.modal-tip{margin:9px 0 0;color:#7589a2;font-size:.7rem;line-height:1.5}.modal-actions{display:flex;justify-content:flex-end;gap:9px;padding:0 20px 20px}.modal-actions .btn{min-height:42px;padding-inline:16px}.modal-actions .save-custom{color:#fff;border-color:transparent;background:linear-gradient(135deg,#7c3aed,#2563eb)}
-    @keyframes orbFloat{to{transform:translate3d(45px,32px,0) scale(1.09)}}@keyframes scanLine{to{transform:translateY(145%)}}@keyframes particleRise{0%{transform:translateY(105vh) scale(.5);opacity:0}10%{opacity:.45}90%{opacity:.25}100%{transform:translateY(-10vh) scale(1.2);opacity:0}}@keyframes heroEnter{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}@keyframes panelReveal{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}@keyframes titleFlow{to{background-position:200% center}}@keyframes markPulse{50%{transform:translateY(-3px);box-shadow:0 0 30px rgba(96,165,250,.25)}}@keyframes signaturePulse{50%{opacity:.55;transform:scale(.72)}}
+    @keyframes orbFloat{to{transform:translate3d(45px,32px,0) scale(1.09)}}@keyframes heroEnter{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}@keyframes panelReveal{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}@keyframes titleFlow{to{background-position:200% center}}@keyframes markPulse{50%{transform:translateY(-3px);box-shadow:0 0 30px rgba(96,165,250,.25)}}@keyframes signaturePulse{50%{opacity:.55;transform:scale(.72)}}
     @keyframes panelGlow{0%,100%{opacity:.16}50%{opacity:.86}}@keyframes titleNeon{0%,100%{filter:drop-shadow(0 0 10px rgba(167,139,250,.24)) drop-shadow(0 0 22px rgba(96,165,250,.1))}50%{filter:drop-shadow(0 0 17px rgba(167,139,250,.45)) drop-shadow(0 0 34px rgba(96,165,250,.22))}}@keyframes signatureFloat{0%,100%{transform:translate3d(-50%,0,0)}50%{transform:translate3d(-50%,-3px,0)}}@keyframes rippleWave{70%{opacity:.25}100%{transform:translate(-50%,-50%) scale(22);opacity:0}}@keyframes chipPulse{0%{transform:scale(.94)}70%{transform:scale(1.035)}100%{transform:scale(1)}}@keyframes buttonShimmer{0%,62%{transform:translateX(-180%) skewX(-18deg)}84%,100%{transform:translateX(360%) skewX(-18deg)}}@keyframes scanResult{0%{opacity:0;transform:translate3d(0,0,0)}12%{opacity:1}86%{opacity:.8}100%{opacity:0;transform:translate3d(0,calc(var(--scan-distance, 620px)),0)}}@keyframes outputReveal{from{opacity:.28;transform:translate3d(0,8px,0)}to{opacity:1;transform:none}}@keyframes cyberBurst{72%{opacity:1}100%{opacity:0;transform:translate3d(var(--x),var(--y),0) rotate(var(--r)) scale(.5)}}
-    @media(max-width:640px){.modal-actions{display:grid;grid-template-columns:1fr 1fr}.modal-actions .btn{width:100%}.particle:nth-child(n+7){display:none}}
+    @media(max-width:640px){.modal-actions{display:grid;grid-template-columns:1fr 1fr}.modal-actions .btn{width:100%}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
   </style>
 </head>
 <body>
+  <canvas id="quantumCanvas" aria-hidden="true"></canvas>
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
     <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.4 4.1L17.5 8.5l-4.1 1.4L12 14l-1.4-4.1-4.1-1.4 4.1-1.4L12 3Z"/><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14ZM5 14l.6 1.6L7 16.2l-1.4.6L5 18.5l-.6-1.7-1.4-.6 1.4-.6L5 14Z"/></symbol>
     <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
@@ -323,9 +325,6 @@
     </div>
     <footer class="footer">Generator PromtAI V2 • Dibuat untuk menghasilkan spesifikasi aplikasi yang jelas dan siap dikembangkan</footer>
   </main>
-  <div class="cyber-grid" aria-hidden="true">
-    <i class="particle" style="left:8%;--speed:17s;--delay:-3s"></i><i class="particle" style="left:19%;--speed:23s;--delay:-14s"></i><i class="particle" style="left:34%;--speed:19s;--delay:-7s"></i><i class="particle" style="left:48%;--speed:26s;--delay:-19s"></i><i class="particle" style="left:62%;--speed:20s;--delay:-11s"></i><i class="particle" style="left:75%;--speed:24s;--delay:-5s"></i><i class="particle" style="left:88%;--speed:18s;--delay:-15s"></i><i class="particle" style="left:95%;--speed:28s;--delay:-9s"></i>
-  </div>
   <div class="modal-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle" aria-hidden="true">
     <div class="modal-card">
       <div class="modal-head"><div><h3 id="customModalTitle"><svg class="ui-icon" aria-hidden="true"><use href="#i-wand"></use></svg>Tulis Prompt Sesuai Permintaan</h3><p>Jelaskan aplikasi, alur kerja, pengguna, perhitungan, laporan, dan detail khusus yang Anda inginkan.</p></div><button type="button" class="modal-close" id="modalClose" aria-label="Tutup popup"><svg class="ui-icon" aria-hidden="true"><use href="#i-x"></use></svg></button></div>
@@ -361,6 +360,125 @@
       };
 
       const motionAllowed = () => !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const initQuantumMesh = () => {
+        const canvas = $('#quantumCanvas');
+        const ctx = canvas?.getContext('2d', {alpha:false, desynchronized:true});
+        if (!canvas || !ctx) return;
+        const reduced = !motionAllowed();
+        let width = 0, height = 0, dpr = 1, raf = 0, lastFrame = 0, running = false;
+        const cursor = {x:innerWidth*.5,y:innerHeight*.45,tx:innerWidth*.5,ty:innerHeight*.45,active:false,energy:.18};
+        let nodes = [], shockwaves = [];
+
+        const buildNodes = () => {
+          const count = width < 520 ? 25 : Math.min(54,34+Math.round(width/105));
+          nodes = Array.from({length:count},(_,i) => ({
+            x:(i*83.71%997)/997*width,
+            y:(i*191.17%991)/991*height,
+            vx:Math.sin(i*2.31)*.055,
+            vy:Math.cos(i*1.73)*.045,
+            phase:i*.87,
+            radius:1+(i%4)*.34,
+            violet:i%5===0||i%7===0
+          }));
+        };
+
+        const resizeMesh = () => {
+          width = Math.max(1, innerWidth); height = Math.max(1, innerHeight);
+          dpr = Math.min(devicePixelRatio||1,width<640?1.05:1.3);
+          canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
+          canvas.style.width = `${width}px`; canvas.style.height = `${height}px`;
+          ctx.setTransform(dpr,0,0,dpr,0,0);
+          cursor.x=Math.min(cursor.x,width);cursor.y=Math.min(cursor.y,height);
+          buildNodes();
+          if(reduced) drawMesh(0,false);
+        };
+
+        const drawGrid = time => {
+          const horizon=height*.27,center=width*.5,travel=(time*.000018)%1;
+          ctx.save();ctx.lineWidth=.55;ctx.strokeStyle='rgba(74,144,220,.105)';ctx.shadowBlur=0;
+          for(let i=-10;i<=10;i++){
+            const bottom=center+i*(width/10);
+            const top=center+i*(width/95);
+            ctx.beginPath();ctx.moveTo(top,horizon);ctx.lineTo(bottom,height+20);ctx.stroke();
+          }
+          for(let i=0;i<18;i++){
+            const t=((i/18+travel)%1),y=horizon+(height-horizon)*Math.pow(t,1.72);
+            ctx.globalAlpha=.25+t*.75;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(width,y);ctx.stroke();
+          }
+          ctx.restore();
+        };
+
+        const drawMesh = (time,update=true) => {
+          const space=ctx.createLinearGradient(0,0,width,height);
+          space.addColorStop(0,'#050814');space.addColorStop(.52,'#070b1b');space.addColorStop(1,'#0a0f24');
+          ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.fillStyle=space;ctx.fillRect(0,0,width,height);
+          const nebula=ctx.createRadialGradient(width*.58,height*.34,10,width*.58,height*.34,Math.max(width,height)*.72);
+          nebula.addColorStop(0,'rgba(31,69,128,.18)');nebula.addColorStop(.42,'rgba(25,28,91,.09)');nebula.addColorStop(1,'rgba(5,8,20,0)');ctx.fillStyle=nebula;ctx.fillRect(0,0,width,height);
+          drawGrid(time);
+
+          cursor.x+=(cursor.tx-cursor.x)*.19;cursor.y+=(cursor.ty-cursor.y)*.19;
+          cursor.energy+=((cursor.active?.62:.16)-cursor.energy)*.07;
+          if(update){
+            for(const n of nodes){
+              const dx=cursor.x-n.x,dy=cursor.y-n.y,dist=Math.hypot(dx,dy)||1;
+              if(cursor.active&&dist<205){const force=(1-dist/205)*.012;n.vx+=dx/dist*force;n.vy+=dy/dist*force;}
+              n.vx+=Math.sin(time*.00022+n.phase)*.0014;n.vy+=Math.cos(time*.00018+n.phase)*.0011;
+              n.vx*=.986;n.vy*=.986;n.x+=n.vx;n.y+=n.vy;
+              if(n.x<-15)n.x=width+15;else if(n.x>width+15)n.x=-15;
+              if(n.y<-15)n.y=height+15;else if(n.y>height+15)n.y=-15;
+            }
+          }
+
+          ctx.globalCompositeOperation='lighter';ctx.shadowBlur=0;
+          const linkDistance=width<600?112:138;
+          for(let i=0;i<nodes.length;i++){
+            let links=0;
+            for(let j=i+1;j<nodes.length&&links<4;j++){
+              const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.hypot(dx,dy);
+              if(dist<linkDistance){const alpha=(1-dist/linkDistance)*.18;ctx.strokeStyle=a.violet||b.violet?`rgba(167,139,250,${alpha})`:`rgba(88,196,255,${alpha})`;ctx.lineWidth=.55;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();links++;}
+            }
+          }
+
+          if(cursor.active){
+            for(const n of nodes){
+              const dist=Math.hypot(n.x-cursor.x,n.y-cursor.y);
+              if(dist<205){const alpha=(1-dist/205)*(.25+cursor.energy*.34);ctx.strokeStyle=n.violet?`rgba(189,147,249,${alpha})`:`rgba(125,225,255,${alpha})`;ctx.lineWidth=.7+cursor.energy*.35;ctx.beginPath();ctx.moveTo(cursor.x,cursor.y);ctx.lineTo(n.x,n.y);ctx.stroke();}
+            }
+            const aura=ctx.createRadialGradient(cursor.x,cursor.y,0,cursor.x,cursor.y,130+cursor.energy*55);
+            aura.addColorStop(0,`rgba(174,235,255,${.055+cursor.energy*.055})`);aura.addColorStop(.35,`rgba(90,120,255,${.035+cursor.energy*.03})`);aura.addColorStop(1,'rgba(75,66,210,0)');ctx.fillStyle=aura;ctx.fillRect(cursor.x-190,cursor.y-190,380,380);
+          }
+
+          for(const n of nodes){
+            const pulse=.72+Math.sin(time*.0016+n.phase)*.24,near=Math.max(0,1-Math.hypot(n.x-cursor.x,n.y-cursor.y)/190);
+            const color=n.violet?'#a78bfa':'#67e8f9';ctx.shadowColor=color;ctx.shadowBlur=5+near*9;ctx.fillStyle=n.violet?`rgba(190,151,255,${.5+pulse*.28})`:`rgba(139,235,255,${.48+pulse*.3})`;ctx.beginPath();ctx.arc(n.x,n.y,n.radius+near*.75,0,Math.PI*2);ctx.fill();
+          }
+
+          if(update){for(const w of shockwaves){w.radius+=2.9;w.life-=.021;}}
+          shockwaves=shockwaves.filter(w=>w.life>0);
+          for(const w of shockwaves){ctx.shadowColor=w.violet?'#a78bfa':'#67e8f9';ctx.shadowBlur=9;ctx.strokeStyle=w.violet?`rgba(167,139,250,${w.life*.34})`:`rgba(103,232,249,${w.life*.34})`;ctx.lineWidth=.8+w.life;ctx.beginPath();ctx.arc(w.x,w.y,w.radius,0,Math.PI*2);ctx.stroke();ctx.strokeStyle=`rgba(255,255,255,${w.life*.08})`;ctx.beginPath();ctx.arc(w.x,w.y,w.radius*.72,0,Math.PI*2);ctx.stroke();}
+          ctx.shadowBlur=0;ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;
+        };
+
+        const frame = time => {
+          if (document.hidden) { running=false; return; }
+          raf = requestAnimationFrame(frame);
+          if (time-lastFrame < 32) return;
+          lastFrame = time; drawMesh(time,true);
+        };
+        const start = () => { if (!reduced && !running && !document.hidden) { running=true;raf=requestAnimationFrame(frame); } };
+        const onPointer = event => {
+          cursor.tx=event.clientX;cursor.ty=event.clientY;cursor.active=true;cursor.energy=Math.min(1,cursor.energy+.2);
+        };
+        window.addEventListener('pointermove',onPointer,{passive:true});
+        window.addEventListener('pointerdown',event=>{onPointer(event);shockwaves.push({x:event.clientX,y:event.clientY,radius:4,life:1,violet:shockwaves.length%2===0});if(shockwaves.length>5)shockwaves.shift();},{passive:true});
+        window.addEventListener('pointerout',event=>{if(!event.relatedTarget)cursor.active=false;},{passive:true});
+        window.addEventListener('resize',resizeMesh,{passive:true});
+        window.addEventListener('blur',()=>{cancelAnimationFrame(raf);running=false;});
+        window.addEventListener('focus',start);
+        document.addEventListener('visibilitychange',() => { if (document.hidden) { cancelAnimationFrame(raf);running=false; } else start(); });
+        resizeMesh();start();
+      };
 
       const addRipple = event => {
         if (!motionAllowed()) return;
@@ -749,6 +867,7 @@ Prioritas akhir: aplikasi harus terasa premium tetapi tetap ringan, langsung men
       $$('.chip').forEach(x => x.setAttribute('aria-pressed','false'));
       loadDraft();
       updateCounter();
+      initQuantumMesh();
     })();
   </script>
 </body>
